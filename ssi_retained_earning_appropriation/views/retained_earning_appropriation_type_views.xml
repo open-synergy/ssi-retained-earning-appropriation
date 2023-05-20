@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Copyright 2023 OpenSynergy Indonesia-->
+<!--Copyright 2023 PT. Simetri Sinergi Indonesia-->
+<!--License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).-->
+<odoo>
+<record id="retained_earning_appropriation_type_view_tree" model="ir.ui.view">
+    <field name="name">retained_earning_appropriation_type - Tree</field>
+    <field name="model">retained_earning_appropriation_type</field>
+    <field name="inherit_id" ref="ssi_master_data_mixin.mixin_master_data_view_tree" />
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+        <data />
+    </field>
+</record>
+
+<record id="retained_earning_appropriation_type_view_search" model="ir.ui.view">
+    <field name="name">retained_earning_appropriation_type - Search</field>
+    <field name="model">retained_earning_appropriation_type</field>
+    <field
+            name="inherit_id"
+            ref="ssi_master_data_mixin.mixin_master_data_view_search"
+        />
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+        <data />
+    </field>
+</record>
+
+<record id="retained_earning_appropriation_type_view_form" model="ir.ui.view">
+    <field name="name">retained_earning_appropriation_type - Form</field>
+    <field name="model">retained_earning_appropriation_type</field>
+    <field name="inherit_id" ref="ssi_master_data_mixin.mixin_master_data_view_form" />
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//page[1]" position="before">
+                <page name="appropriation" string="Amount To Appropriate">
+                    <field name="amount_to_appropriate_python" widget="ace" />
+                </page>
+                <page name="accounting" string="Accounting">
+                    <group name="accounting_1" colspan="4" col="2">
+                        <group name="accounting_1_1" colspan="1" col="2">
+                            <field name="journal_id" />
+                            <field name="retained_earning_account_id" />
+                            <field name="appropriation_account_id" />
+                        </group>
+                        <group name="accounting_1_2" colspan="1" col="2">
+                        </group>
+                    </group>
+                </page>
+                <page name="distribution" string="Distribution">
+                    <group name="distribution_1" colspan="4" col="2">
+                        <group name="distribution_1_1" colspan="1" col="2">
+                            <field name="distribute" />
+                            <field name="partner_selection_method" />
+
+                        </group>
+                    </group>
+                    <group name="distribution_1_2" colspan="1" col="2">
+                        <field
+                                name="partner_selection_domain"
+                                widget="domain"
+                                attrs="{'invisible':[('partner_selection_method','!=','domain')]}"
+                                options="{'model':'res.partner'}"
+                            />
+                        <field
+                                name="partner_selection_python"
+                                widget="ace"
+                                attrs="{'invisible':[('partner_selection_method','!=','python')]}"
+                            />
+                        <field name="amount_distribute_python" widget="ace" />
+                    </group>
+                </page>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="retained_earning_appropriation_type_action" model="ir.actions.act_window">
+    <field name="name">Retained Earning Appropriation Types</field>
+    <field name="res_model">retained_earning_appropriation_type</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<menuitem
+        id="retained_earning_appropriation_type_menu"
+        name="R/E Appropriation Types"
+        parent="ssi_financial_accounting.menu_equity_configuration"
+        groups="retained_earning_appropriation_type_group"
+        action="retained_earning_appropriation_type_action"
+        sequence="12"
+    />
+</odoo>
